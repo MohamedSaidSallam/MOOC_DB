@@ -1,2 +1,5 @@
-INSERT INTO EnrollmentType (type) VALUES ("Audit");
-INSERT INTO EnrollmentType (type) VALUES ("Paid");
+USE dbproject;
+INSERT INTO EnrollmentType (type)
+VALUES
+  ("Audit"),
+  ("Paid");
