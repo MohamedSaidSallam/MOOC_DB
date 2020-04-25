@@ -2,6 +2,7 @@ USE dbproject;
 INSERT INTO CourseCategory (name)
 VALUES
   ("Architecture"),
+  ("Artificial Intelligence"),
   ("Business"),
   ("Communication"),
   ("Computer Science"),

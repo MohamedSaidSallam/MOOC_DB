@@ -4,5 +4,6 @@ VALUES
   ("English"),
   ("Arabic"),
   ("Chinese"),
+  ("German"),
   ("Spanish"),
   ("Russian");

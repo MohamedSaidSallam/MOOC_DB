@@ -80,8 +80,8 @@ VALUES
 
 INSERT INTO Question (text, sid)
 VALUES
-    ("Dummy Text 1", @Section1+3),
-    ("Dummy Text 2", @Section1+3);
+    ("Dummy Text 1", @Section1+2),
+    ("Dummy Text 2", @Section1+2);
 
 SET @Question1ID = LAST_INSERT_ID();
 
@@ -93,7 +93,7 @@ VALUES
     ("Dummy Answer 4", @Question1ID),
     ("Dummy Answer 1", @Question1ID + 1),
     ("Dummy Answer 2", @Question1ID + 1),
-    ("Dummy Answer 3", @Question1ID + 1);
+    ("Dummy Answer 3", @Question1ID + 1),
     ("Dummy Answer 4", @Question1ID + 1);
 
 SET @Choice1ID = LAST_INSERT_ID();
@@ -105,9 +105,9 @@ VALUES
 
 INSERT INTO takes (sid, username, grade)
 VALUES
-    (@Section1+3, "Student Username 1", 3),
-    (@Section1+3, "Student Username 3", 5),
-    (@Section1+3, "Student Username 5", 5);
+    (@Section1+2, "Student Username 1", 3),
+    (@Section1+2, "Student Username 3", 5),
+    (@Section1+2, "Student Username 5", 5);
 
 -- Week 1 END
 
