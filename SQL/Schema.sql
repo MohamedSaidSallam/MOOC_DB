@@ -9,7 +9,7 @@ CREATE TABLE University
 
 CREATE TABLE Lecturer
 (
-  lid INT NOT NULL,
+  lid INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
   imageUrl VARCHAR(255) NOT NULL,
   bio VARCHAR(255) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE Lecturer
 
 CREATE TABLE Specialization
 (
-  spid INT NOT NULL,
+  spid INT NOT NULL AUTO_INCREMENT,
   title VARCHAR(255) NOT NULL,
   description VARCHAR(255) NOT NULL,
   PRIMARY KEY (spid)
@@ -30,7 +30,7 @@ CREATE TABLE Specialization
 
 CREATE TABLE Student
 (
-  username INT NOT NULL,
+  username VARCHAR(255) NOT NULL,
   name VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
   PRIMARY KEY (username)
@@ -38,7 +38,7 @@ CREATE TABLE Student
 
 CREATE TABLE CourseCategory
 (
-  name INT NOT NULL,
+  name VARCHAR(255) NOT NULL,
   PRIMARY KEY (name)
 );
 
@@ -62,14 +62,14 @@ CREATE TABLE Language
 
 CREATE TABLE Course
 (
-  cid INT NOT NULL,
+  cid INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
   price NUMERIC(10, 2) NOT NULL DEFAULT 0,
   duration INT NOT NULL,
   pictureURL VARCHAR(255) NOT NULL,
   description VARCHAR(255) NOT NULL,
   spid INT NULL,
-  category INT NOT NULL,
+  category VARCHAR(255) NOT NULL,
   level VARCHAR(255) NOT NULL,
   language VARCHAR(255) NOT NULL,
   PRIMARY KEY (cid),
@@ -86,12 +86,12 @@ CREATE TABLE Course
     ON UPDATE CASCADE
     ON DELETE RESTRICT,
   CONSTRAINT postivePrice CHECK(price >= 0),
-  CONSTRAINT postiveDuration CHECK(duration >= 0)
+  CONSTRAINT postiveDuration CHECK(duration > 0)
 );
 
 CREATE TABLE Week
 (
-  wid INT NOT NULL,
+  wid INT NOT NULL AUTO_INCREMENT,
   title VARCHAR(255) NOT NULL,
   number INT NOT NULL,
   cid INT NOT NULL,
@@ -104,7 +104,7 @@ CREATE TABLE Week
 CREATE TABLE Enrolls
 (
   cid INT NOT NULL,
-  username INT NOT NULL,
+  username VARCHAR(255) NOT NULL,
   startDate DATE NOT NULL,
   passed BOOLEAN NULL DEFAULT NULL,
   enrollmentType VARCHAR(255) NOT NULL,
@@ -135,7 +135,7 @@ CREATE TABLE TaughtBy
 
 CREATE TABLE Section
 (
-  sid INT NOT NULL,
+  sid INT NOT NULL AUTO_INCREMENT,
   title VARCHAR(255) NOT NULL,
   duration INT NOT NULL,
   wid INT NOT NULL,
@@ -143,7 +143,7 @@ CREATE TABLE Section
   FOREIGN KEY (wid) REFERENCES Week(wid)
     ON UPDATE CASCADE
     ON DELETE RESTRICT, -- CASCADE?
-  CONSTRAINT postiveSectionDuration CHECK(duration >= 0)
+  CONSTRAINT postiveSectionDuration CHECK(duration > 0)
 );
 
 CREATE TABLE VideoLecture
@@ -178,11 +178,10 @@ CREATE TABLE Quiz
   CONSTRAINT postiveMaxGrade CHECK(maxGrade >= 0)
 );
 
-CREATE TABLE Questions
+CREATE TABLE Question
 (
-  qid INT NOT NULL,
+  qid INT NOT NULL AUTO_INCREMENT,
   text VARCHAR(255) NOT NULL,
-  answer VARCHAR(255) NOT NULL,
   sid INT NOT NULL,
   PRIMARY KEY (qid),
   FOREIGN KEY (sid) REFERENCES Quiz(sid)
@@ -193,7 +192,7 @@ CREATE TABLE Questions
 CREATE TABLE takes
 (
   sid INT NOT NULL,
-  username INT NOT NULL,
+  username VARCHAR(255) NOT NULL,
   grade INT NOT NULL,
   PRIMARY KEY (username, sid),
   FOREIGN KEY (username) REFERENCES Student(username)
@@ -205,16 +204,26 @@ CREATE TABLE takes
   CONSTRAINT postiveGrade CHECK(grade >= 0)
 );
 
-CREATE TABLE QuestionsChoices
+CREATE TABLE QuestionsChoice
 (
+  qcid INT NOT NULL AUTO_INCREMENT,
   choice VARCHAR(255) NOT NULL,
   qid INT NOT NULL,
-  PRIMARY KEY (choice),
-  FOREIGN KEY (qid) REFERENCES Questions(qid)
+  PRIMARY KEY (qcid),
+  FOREIGN KEY (qid) REFERENCES Question(qid)
     ON UPDATE CASCADE
     ON DELETE RESTRICT -- CASCADE?
 );
 
- ALTER TABLE Questions ADD FOREIGN KEY (answer) REFERENCES QuestionsChoices(choice)
+CREATE TABLE QuestionAnswer
+(
+  qid INT NOT NULL,
+  qcid INT NOT NULL,
+  PRIMARY KEY (qid),
+  FOREIGN KEY (qid) REFERENCES Question(qid)
     ON UPDATE CASCADE
-    ON DELETE RESTRICT; -- CASCADE?
+    ON DELETE RESTRICT, -- CASCADE?
+  FOREIGN KEY (qcid) REFERENCES QuestionsChoice(qcid)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT -- CASCADE?
+);
