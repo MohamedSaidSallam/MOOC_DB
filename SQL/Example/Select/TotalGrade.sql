@@ -1,3 +1,5 @@
+-- Total Grade
+
 SELECT Student.username, course.name, SUM(takes.grade) as TotalGrade
 FROM Student
 LEFT JOIN takes ON Student.username = takes.username
