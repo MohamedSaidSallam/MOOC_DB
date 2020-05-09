@@ -1,17 +1,4 @@
-INSERT INTO Lecturer (name, imageUrl, bio, uniName)
-VALUES
-  (
-    "Prof. Andrew NG",
-    "xxx",
-    "Pioneer in Deep Learning, Machine Learning and AI",
-    "Stanford University"
-  );
-INSERT INTO Student (username, name, password)
-VALUES
-  ("mfayed", "Mariam", "12345");
-INSERT INTO Student (username, name, password)
-VALUES
-  ("msaid", "Said", "12345");
+
 INSERT INTO Course (
     name,
     price,
@@ -35,24 +22,12 @@ VALUES
     "Artificial Intelligence",
     "Intermediate",
     "English"
-  );
-INSERT INTO Course (
-    name,
-    price,
-    duration,
-    pictureUrl,
-    description,
-    spid,
-    category,
-    level,
-    language
-  )
-VALUES
+  ),
   (
     "Machine Learning",
     30,
     10,
-    " xxx ",
+    "xxx",
     "Machine learning is an application of artificial intelligence (AI) that provides systems the ability to automatically learn
     and improve
     from experience without being explicitly programmed.",
@@ -61,48 +36,59 @@ VALUES
     "Intermediate",
     "German"
   );
-INSERT INTO Week (title, number, cid)
-VALUES
-  ("DL", 1, 1),
-  ("DL", 2, 1),
-  ("ML", 1, 2),
-  ("ML", 2, 2);
-INSERT INTO Enrolls (cid, username, startDate, enrollmentType)
-VALUES
-  (1, "mfayed", " 2020-5-10", "Paid");
 
+SET @CourseID = LAST_INSERT_ID();
 INSERT INTO TaughtBy (lid, cid)
 VALUES
-  (1, 1);
+  (1, @CourseID);
+
+INSERT INTO Enrolls (cid, username, startDate, enrollmentType)
+VALUES
+  (@CourseID, "mfayed", CURDATE(), "Paid");
+
+INSERT INTO Week (title, number, cid)
+VALUES
+  ("DL", 1, @CourseID-1),
+  ("DL", 2, @CourseID-1),
+  ("ML", 1, @CourseID),
+  ("ML", 2, @CourseID);
+
+SET @Week1 = LAST_INSERT_ID();
 INSERT INTO Section (title, duration, wid)
 VALUES
-  ("DL Section", 60, 1),
-  ("DL Section", 60, 2),
-  ("ML Section", 60, 3),
-  ("ML Section", 60, 4);
+  ("DL Section", 60, @Week1),
+  ("DL Section", 60, @Week1 + 1),
+  ("ML Section", 60, @Week1 + 2),
+  ("ML Section", 60, @Week1 + 3);
+
+SET @Section1 = LAST_INSERT_ID();
 
 INSERT INTO VideoLecture (sid, VideoURL, subtitles)
 VALUES
-  (1, " xxx ", "Arabic");
+  (@Section1, " xxx ", "Arabic");
 
 INSERT INTO Article (sid, text)
 VALUES
-  (2, " xxx ");
+  (@Section1 + 1, " xxx ");
 INSERT INTO Quiz (sid, maxGrade)
 VALUES
-  (3, 10);
+  (@Section1 + 2, 10);
 INSERT INTO Question (text, sid)
 VALUES
-  ("xxx", 3);
+  ("xxx", @Section1 + 2);
 
 INSERT INTO takes (sid, username, grade)
 VALUES
-  (3, "mfayed", 8);
+  (@Section1 + 2, "mfayed", 8);
+
+SET @Question1ID = LAST_INSERT_ID();
 
 INSERT INTO QuestionsChoice (choice, qid)
 VALUES
-  (" a ", 1);
+  (" a ", @Question1ID);
+
+SET @Choice1ID = LAST_INSERT_ID();
 
 INSERT INTO QuestionAnswer (qid, qcid)
 VALUES
-    (1, 1);
+    (@Question1ID, @Choice1ID);
