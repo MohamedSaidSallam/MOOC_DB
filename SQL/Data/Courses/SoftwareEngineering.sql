@@ -14,8 +14,8 @@ INSERT INTO Course (
 VALUES
   (
     "Software Engineering",
-    "120",
-    "10",
+    120,
+    10,
     "Dummy URL",
     "Dummy Text Dummy Text Dummy Text Dummy Text",
     1,
@@ -29,7 +29,7 @@ SET @CourseID = LAST_INSERT_ID();
 
 INSERT INTO taughtby (lid, cid)
 VALUES
-    (1, @CourseID);
+    (2, @CourseID);
 
 INSERT INTO Enrolls (cid, username, startDate, enrollmentType)
 VALUES
@@ -42,13 +42,13 @@ VALUES
   (
     @CourseID,
     "Student Username 3",
-    CURDATE() - 1,
+    CURDATE()-1,
     "Paid"
   ),
   (
     @CourseID,
     "Student Username 5",
-    CURDATE() - 10,
+    CURDATE()-2,
     "Paid"
   );
 

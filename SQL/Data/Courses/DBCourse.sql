@@ -14,8 +14,8 @@ INSERT INTO Course (
 VALUES
   (
     "Introduction To Databases",
-    "100",
-    "14",
+    100,
+    14,
     "Dummy URL",
     "Dummy Text Dummy Text Dummy Text Dummy Text",
     1,
@@ -29,8 +29,8 @@ SET @CourseID = LAST_INSERT_ID();
 
 INSERT INTO taughtby (lid, cid)
 VALUES
-    (1, @CourseID),
-    (2, @CourseID);
+    (2, @CourseID),
+    (3, @CourseID);
 
 INSERT INTO Enrolls (cid, username, startDate, enrollmentType)
 VALUES
