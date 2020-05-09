@@ -12,6 +12,7 @@ MOOC (Massive Open Online Course) DB Schema made for ASU DB(1) Course Project 20
 ## Authors
 
 * **Mohamed Said Gaber** [TheDigitalPhoenixX](https://github.com/TheDigitalPhoenixX)
+* **Mariam Fayed** [MariamFayed](https://github.com/MariamFayed)
 
 ## License
 
